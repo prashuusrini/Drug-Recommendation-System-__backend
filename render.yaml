@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: drug-recommendation-api
+    env: python
+    region: oregon  # or frankfurt, depending on your location
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    autoDeploy: true
