@@ -1,13 +1,21 @@
+import os
 from flask import Flask, request, jsonify
-from your_ml_model import predict_drugs  # Your custom function
+import joblib
 
 app = Flask(__name__)
+model = joblib.load("model.pkl")  # Load your model
+
+@app.route("/")
+def home():
+    return "Drug Recommendation API is running."
 
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.json
-    drugs = predict_drugs(data)  # Your ML prediction logic
-    return jsonify({"recommendations": drugs})
+    # Custom prediction logic here
+    recommendations = ["Paracetamol", "Ibuprofen"]  # Dummy response
+    return jsonify({"recommendations": recommendations})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
